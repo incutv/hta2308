@@ -7,7 +7,7 @@
 # 📖 실습 환경
 * spring boot 3.x
 * java 17
-* caffine cache
+* caffine cache(local cache)
 * h2
 * Maven
 * intellij
@@ -16,7 +16,7 @@
 ### 목적:캐싱활용 캐싱을 통해 성능 개선 경험
 * notice 테이블에는 조회수 필드가 있습니다.
 * 조회수를 기반으로 HOT 게시글 10개를 출력하고자 합니다. ( 커뮤니티에 핫글이라고 생각해주시면 됩니다.)
-  * HOT 게시글 10개애 대한 데이터를 캐싱 처리하고자 합니다.( ehcache 활용)
+  * HOT 게시글 10개애 대한 데이터를 캐싱 처리하고자 합니다.( caffine cache 활용)
     * 조회수가 동일한경우에는 최근에 생성한 공지사항 게시글순으로 나올수있게 개선해주세요. - (단, java 문법을 활용하여 정렬 처리 해주세요.)
 
 * spring boot gmail 발송 기능을 추가해주세요.
