@@ -12,5 +12,5 @@ public interface NoticeReadMapper {
 
      public List<Notice> findTop10Views();
 
-
+     public List<Notice> findOne();
 }
