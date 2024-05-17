@@ -10,6 +10,11 @@
         limit 5000;
     </select>
 
-
+    <select id="findTop10Views" resultType="com.example.htaproject2308.dto.Notice">
+        SELECT *
+        FROM notice
+        order by views desc
+        limit 10;
+    </select>
 
 </mapper>
