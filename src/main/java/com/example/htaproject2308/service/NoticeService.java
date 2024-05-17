@@ -9,4 +9,6 @@ public interface NoticeService {
     List<Notice> getAllNotices();
 
     List<Notice> getTop10Views();
+
+    List<Notice> getOneNotice();
 }

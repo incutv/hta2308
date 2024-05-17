@@ -33,6 +33,11 @@ public class NoticeServiceImpl implements NoticeService {
         Collections.sort(list, Collections.reverseOrder());
         return list;
     }
+
+    @Override
+    public List<Notice> getOneNotice() {
+        return noticeReadMapper.findOne();
+    }
 }
 
 
