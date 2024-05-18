@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+
 
 @Slf4j
 @Service
@@ -21,6 +23,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Cacheable(value = "NoticeMapper.findAll" , condition = "")
     public List<Notice> getAllNotices() {
         return noticeReadMapper.findAll();
     }
