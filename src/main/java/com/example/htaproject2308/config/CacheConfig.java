@@ -2,17 +2,17 @@ package com.example.htaproject2308.config;
 
 import com.example.htaproject2308.common.CacheType;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-@Configurable
+@Configuration
 // 캐싱 활성화
 @EnableCaching
 public class CacheConfig {
