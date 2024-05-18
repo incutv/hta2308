@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
+
     private final NoticeReadMapper noticeReadMapper;
 
     @Autowired
