@@ -36,7 +36,6 @@ public class NoticeServiceImpl implements NoticeService {
                 .thenComparing(Notice::getCreateDate)
                 .reversed());
         log.info("Notices fetched: {}", notices);
-        System.out.println("why");
         return notices;
     }
 }
