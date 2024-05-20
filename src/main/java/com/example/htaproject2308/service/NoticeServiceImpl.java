@@ -21,14 +21,25 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Cacheable(value = "NoticeServiceImpl.getAllNotices")
     public List<Notice> getAllNotices() {
+        log.info("getAllNotices log print");
         return noticeReadMapper.findAll();
     }
 
     @Override
+    @Cacheable(value = "NoticeServiceImpl.getTop10Views")
     public List<Notice> getTop10Views() {
-        // 구현 해야함.. 내부 로직은 없음
-        return Collections.emptyList();
+        log.info("getTop10Views log print");
+        List<Notice> notices = noticeReadMapper.findTop10Views();
+        if(!notices.isEmpty()){
+            Comparator<Notice> comparator = Comparator.comparingInt(Notice::getViews)
+                    .thenComparing(Notice::getCreateDate)
+                    .reversed();
+
+            notices.sort(comparator);
+        }
+        return notices;
     }
 }
 
