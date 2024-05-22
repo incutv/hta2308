@@ -32,7 +32,7 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getTop10Views() {
         log.info("getTop10Views log print");
         List<Notice> notices = noticeReadMapper.findTop10Views();
-        if(!notices.isEmpty()){
+        if (!notices.isEmpty()) {
             Comparator<Notice> comparator = Comparator.comparingInt(Notice::getViews)
                     .thenComparing(Notice::getCreateDate)
                     .reversed();

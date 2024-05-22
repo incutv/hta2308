@@ -31,18 +31,4 @@
             LIMIT 10;
     </select>
 
-    <select id="findTop10Views" resultType="com.example.htaproject2308.dto.Notice">
-        SELECT *
-        FROM notice
-        ORDER BY views DESC
-        LIMIT 10;
-    </select>
-
-    <select id="findOne" resultType="com.example.htaproject2308.dto.Notice">
-        SELECT content
-        FROM notice
-        ORDER BY views DESC
-        LIMIT 1;
-    </select>
-
 </mapper>
