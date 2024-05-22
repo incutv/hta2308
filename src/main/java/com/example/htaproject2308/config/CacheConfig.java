@@ -1,6 +1,7 @@
 package com.example.htaproject2308.config;
 
-import com.example.htaproject2308.common.CacheType;
+
+import com.example.htaproject2308.service.CacheType;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -33,3 +34,4 @@ public class CacheConfig {
         return cacheManager;
     }
 }
+
