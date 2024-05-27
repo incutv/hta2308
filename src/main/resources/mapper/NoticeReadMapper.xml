@@ -5,11 +5,30 @@
 <mapper namespace="com.example.htaproject2308.mapper.NoticeReadMapper">
 
     <select id="findAll" resultType="com.example.htaproject2308.dto.Notice">
-        SELECT *
+        SELECT
+            id
+             ,title
+             ,content
+             ,who
+             ,views
+             ,createDate
+             ,updateDate
         FROM notice
-        limit 5000;
+                 limit 5000;
     </select>
 
-
+    <select id="findTop10Views" resultType="com.example.htaproject2308.dto.Notice">
+        SELECT
+            id
+             ,title
+             ,content
+             ,who
+             ,views
+             ,createDate
+             ,updateDate
+        FROM notice
+        ORDER BY views DESC
+            LIMIT 10;
+    </select>
 
 </mapper>

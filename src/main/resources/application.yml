@@ -1,0 +1,17 @@
+spring:
+  application:
+    name:
+      shedlock_test
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydatabase
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: mbti_test
+    password: 1234
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
