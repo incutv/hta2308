@@ -16,15 +16,15 @@ public class ScheduleTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleTask.class);
 
     @Scheduled(cron = "0 * * * * ?") // 매분마다 실행
-    //@SchedulerLock(name = "ScheduledTask_run")
+    @SchedulerLock(name = "ScheduledTask_run")
     public void runTask() throws InterruptedException{
 
         System.out.println("task1: "+ LocalDateTime.now());
     }
-    @Scheduled(cron = "0 * * * * ?") // 매분마다 실행
+
+    //@Scheduled(cron = "0 * * * * ?") // 매분마다 실행
     //@SchedulerLock(name = "ScheduledTask_run")
     public void runTask2() throws InterruptedException{
-
         System.out.println("task2: "+  LocalDateTime.now());
     }
 }
