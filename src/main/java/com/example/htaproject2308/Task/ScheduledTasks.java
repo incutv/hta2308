@@ -19,6 +19,7 @@ public class ScheduledTasks {
 
     @Scheduled(cron = "0 0 18 * * ?")
     public void sendHotPostsEmail() {
+
         // HOT 게시글 10개를 가져옵니다.
         List<Notice> hot10 = noticeService.getTop10Views();
 
