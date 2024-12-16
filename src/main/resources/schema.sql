@@ -9,3 +9,9 @@ CREATE TABLE notice(
     createDate TIMESTAMP NOT NULL,
     updateDate TIMESTAMP NOT NULL
 );
+
+
+select * from notice;
+
+
+commit ;

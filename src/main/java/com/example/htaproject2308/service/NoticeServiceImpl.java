@@ -8,12 +8,14 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeReadMapper noticeReadMapper;
+
 
     @Autowired
     public NoticeServiceImpl(NoticeReadMapper noticeReadMapper) {
@@ -26,10 +28,22 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Cacheable(value = "NoticeReadMapper.findTop10Views" , condition = "#top10Views != null and #top10Views.size() > 0")
     public List<Notice> getTop10Views() {
-        // 구현 해야함.. 내부 로직은 없음
-        return Collections.emptyList();
+
+        List<Notice> allNotices = noticeReadMapper.findAll();
+
+        List<Notice> top10Views = allNotices.stream()
+                .sorted(Comparator.comparingInt(Notice::getViews).reversed())
+                .limit(10)
+                .collect(Collectors.toList());
+
+        return top10Views;
     }
+
+
+
+
 }
 
 
