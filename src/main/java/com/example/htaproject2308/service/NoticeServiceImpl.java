@@ -32,7 +32,6 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> getTop10Views() {
 
         List<Notice> allNotices = noticeReadMapper.findAll();
-
         List<Notice> top10Views = allNotices.stream()
                 .sorted(Comparator.comparingInt(Notice::getViews).reversed())
                 .limit(10)
