@@ -21,14 +21,16 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Cacheable(value = "NoticeMapper.findAll", condition="")
     public List<Notice> getAllNotices() {
         return noticeReadMapper.findAll();
     }
 
     @Override
+    @Cacheable(value = "NoticeMapper.findTop10Views", condition="#top10Views.length > 0")
     public List<Notice> getTop10Views() {
-        // 구현 해야함.. 내부 로직은 없음
-        return Collections.emptyList();
+        List<Notice> top10Views = noticeReadMapper.findAll()
+        return top10Views;
     }
 }
 
