@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum CacheType {
 
-    NOTICE_FINDTOP10VIEWS("NoticeReadMapper.findTop10Views", 10, 10000);
+    NOTICE_FINDALL("NoticeMapper.findAll", 10, 10000);
 
     private final String cacheName;
     private final int expiredAfterWrite;
