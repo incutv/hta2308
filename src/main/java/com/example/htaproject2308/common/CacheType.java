@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class CacheType {
+public enum CacheType {
     NOTICE_FINDALL("NoticeReadMapper.findAll", 10, 10000);
 
     private final String cacheName;
