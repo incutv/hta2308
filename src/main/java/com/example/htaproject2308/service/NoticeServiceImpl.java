@@ -28,15 +28,15 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
-    @Cacheable(value = "NoticeReadMapper.findTop10Views" , condition = "#top10Views != null and #top10Views.size() > 0")
+    @Cacheable(value = "NoticeMapper.findTop10Views")
     public List<Notice> getTop10Views() {
+        List<Notice> allNotices = noticeReadMapper.findTop10Views();
 
-        List<Notice> allNotices = noticeReadMapper.findAll();
-        List<Notice> top10Views = allNotices.stream()
-                .sorted(Comparator.comparingInt(Notice::getViews).reversed())
+        return allNotices.stream()
+                .sorted(Comparator.comparingInt(Notice::getViews).reversed()
+                        .thenComparing(Notice::getCreateDate, Comparator.reverseOrder()))
                 .limit(10)
-                .collect(Collectors.toList());
-        return top10Views;
+                .toList();
     }
 }
 
