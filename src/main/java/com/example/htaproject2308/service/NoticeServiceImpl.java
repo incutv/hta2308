@@ -5,6 +5,7 @@ import com.example.htaproject2308.mapper.NoticeReadMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,11 +16,13 @@ import java.util.stream.Collectors;
 public class NoticeServiceImpl implements NoticeService {
 
     private final NoticeReadMapper noticeReadMapper;
+    private JdbcTemplate jdbcTemplate;
 
 
     @Autowired
-    public NoticeServiceImpl(NoticeReadMapper noticeReadMapper) {
+    public NoticeServiceImpl(NoticeReadMapper noticeReadMapper, JdbcTemplate jdbcTemplate) {
         this.noticeReadMapper = noticeReadMapper;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -39,6 +42,8 @@ public class NoticeServiceImpl implements NoticeService {
 
         return top10Views;
     }
+
+
 
 
 
