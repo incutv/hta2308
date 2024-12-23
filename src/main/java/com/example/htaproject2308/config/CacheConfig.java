@@ -36,6 +36,8 @@ public class CacheConfig {
                 .map(cache -> new CaffeineCache(cache.getCacheName(), Caffeine.newBuilder().recordStats()
                         .expireAfterWrite(cache.getExpiredAfterWrite(), TimeUnit.SECONDS)
                         .maximumSize(cache.getMaximumSize())
+                        // TODO build에 데이터 다시 불러오는 함수 작성해서 적용해두기
+                        .refreshAfterWrite(60, TimeUnit.SECONDS)
                         .build()))
                 .toList();
     }
@@ -46,4 +48,6 @@ public class CacheConfig {
 
         return cacheManager;
     }
+
+    // TODO 데이터 다시 불러오는 함수 추가
 }

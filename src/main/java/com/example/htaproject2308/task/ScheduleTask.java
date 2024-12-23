@@ -23,4 +23,10 @@ public class ScheduleTask {
 
         System.out.println("task2: "+  LocalDateTime.now());
     }
+
+    @Scheduled(cron = "0 * * * * ?")
+    @SchedulerLock(name = "ScheduledTask_run")
+    public void dailySettlement() {
+
+    }
 }
