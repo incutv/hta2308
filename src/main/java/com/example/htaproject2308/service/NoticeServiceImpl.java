@@ -21,6 +21,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @Cacheable(value = "noticeReadMapper:findAll")
     public List<Notice> getAllNotices() {
         return noticeReadMapper.findAll();
     }
