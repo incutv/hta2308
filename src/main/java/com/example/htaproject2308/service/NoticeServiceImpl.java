@@ -1,5 +1,6 @@
 package com.example.htaproject2308.service;
 
+import com.example.htaproject2308.config.db.SetDataSource;
 import com.example.htaproject2308.dto.Notice;
 import com.example.htaproject2308.mapper.NoticeReadMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    @SetDataSource(dataSourceType = SetDataSource.DataSourceType.SLAVE)
     public List<Notice> getAllNotices() {
         return noticeReadMapper.findAll();
     }
