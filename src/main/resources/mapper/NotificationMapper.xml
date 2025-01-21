@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.htaproject2308.mapper.NotificationMapper">
+
+    <insert id="saveNotification" parameterType="com.example.htaproject2308.dto.Notification">
+        INSERT INTO notification (
+            user_id,
+            message,
+            read,
+            created_at,
+            modified_at
+        ) VALUES (
+                     #{receiverId},
+                     #{message},
+                     #{read},
+                     now(),
+                     now()
+                 )
+    </insert>
+
+</mapper>

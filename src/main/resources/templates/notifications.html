@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+</head>
+<body>
+<h1>Notifications</h1>
+<ul id="notification-list"></ul>
+
+<script>
+    // SSE 연결 설정
+    const eventSource = new EventSource('/api/v1/notifications/stream');
+
+    // 'notification' 이벤트 리스너 추가
+    eventSource.addEventListener('notification', function (event) {
+        const notificationList = document.getElementById('notification-list');
+        const newNotification = document.createElement('li');
+        newNotification.textContent = event.data; // 서버에서 전달된 메시지
+        notificationList.appendChild(newNotification);
+    });
+
+    // 기본 이벤트 처리 (필요에 따라 유지)
+    eventSource.onmessage = function (event) {
+        console.log("Default Event: ", event.data);
+    };
+
+    // 오류 처리
+    eventSource.onerror = function () {
+        console.error("Connection lost. Retrying...");
+    };
+
+    // 알림 전송 트리거 (테스트용 버튼 추가)
+    function sendNotification() {
+        fetch('/api/v1/notifications/send')
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error(error));
+    }
+</script>
+
+<button onclick="sendNotification()">Send Notification</button>
+</body>
+</html>
