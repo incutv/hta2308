@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>엑셀 파일 업로드</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h2>엑셀 파일 업로드</h2>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" id="file" name="file" accept=".xlsx" required />
+    <button type="submit">업로드</button>
+</form>
+
+<h3>업로드 결과</h3>
+<table border="1">
+    <thead>
+    <tr id="table-header"></tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $("#uploadForm").submit(function (event) {
+            event.preventDefault();
+
+            let formData = new FormData();
+            let fileInput = $("#file")[0].files[0];
+
+            if (!fileInput) {
+                alert("파일을 선택하세요.");
+                return;
+            }
+
+            formData.append("file", fileInput);
+
+            $.ajax({
+                //url: "/upload-excel",
+                url: "/upload",
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    renderTable(data);
+                },
+                error: function () {
+                    alert("파일 업로드 실패");
+                }
+            });
+        });
+
+        function renderTable(data) {
+            $("#table-header").empty();
+            $("#table-body").empty();
+
+            if (data.length === 0) {
+                $("#table-body").append("<tr><td colspan='100%'>데이터 없음</td></tr>");
+                return;
+            }
+
+            // 헤더 생성
+            let headerRow = $("<tr>");
+            data[0].forEach(function (column) {
+                headerRow.append($("<th>").text(column));
+            });
+            $("#table-header").append(headerRow);
+
+            // 바디 생성
+            data.forEach(function (row) {
+                let rowData = $("<tr>");
+                row.forEach(function (cell) {
+                    rowData.append($("<td>").text(cell));
+                });
+                $("#table-body").append(rowData);
+            });
+        }
+    });
+</script>
+</body>
+</html>
