@@ -1,5 +1,6 @@
 package com.example.htaproject2308.service;
 
+import com.example.htaproject2308.dto.Book;
 import com.example.htaproject2308.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -24,7 +25,7 @@ public class ExcelReaderService {
     public List<List<String>> readExcel(MultipartFile file) throws Exception {
         List<List<String>> dataList = new ArrayList<>();
         if(file.getSize() < MAX_FILE_SIZE_THRESHOLD){
-            dataList = readExcelWithXSSF(file.getInputStream());
+            //dataList = readExcelWithXSSF(file.getInputStream());
         }else{
             dataList = readExcelWithSAX(FileUtil.saveAndGetFile(file));
         }
@@ -47,18 +48,19 @@ public class ExcelReaderService {
     /**
      * XSSFWorkbook 기반 엑셀 파일 읽기
      */
-    public List<List<String>> readExcelWithXSSF(InputStream inputStream) {
-        List<List<String>> dataList = new ArrayList<>();
+    public List<Book> readExcelWithXSSF(InputStream inputStream) {
+        List<Book> dataList = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(inputStream)) { // XSSFWorkbook 사용
             Sheet sheet = workbook.getSheetAt(0); // 첫 번째 시트 가져오기
-
             for (Row row : sheet) {
-                List<String> rowData = new ArrayList<>();
-                for (Cell cell : row) {
-                    rowData.add(getCellValue(cell));
-                }
-                dataList.add(rowData);
+                if (row.getRowNum() == 0 || getCellValue(row.getCell(1)).equals("")) continue; // 첫 번째 행(헤더) 건너뛰기
+
+                String title = getCellValue(row.getCell(0));
+                int price = parsePrice(getCellValue(row.getCell(1)));
+                String author = getCellValue(row.getCell(2));
+
+                dataList.add(new Book(title, price, author));
             }
         } catch (Exception e) {
             log.error("XSSFWorkbook 방식 엑셀 파일 읽기 오류", e);
@@ -67,11 +69,20 @@ public class ExcelReaderService {
         return dataList;
     }
 
+    private int parsePrice(String priceStr) {
+        try {
+            return (int) Double.parseDouble(priceStr); // 소수점이 포함된 경우 정수로 변환
+        } catch (NumberFormatException e) {
+            log.warn("가격 변환 오류: {}", priceStr);
+            return 0; // 변환 실패 시 기본값 처리
+        }
+    }
+
     /**
      * SXSSFWorkbook는 읽기지원을 하지 않음 -> 해당 코드는 정상적으로 작동하지 않음.
      */
-    public List<List<String>> readExcelWithSXSSF(InputStream inputStream) {
-        List<List<String>> dataList = new ArrayList<>();
+    public List<Book> readExcelWithSXSSF(InputStream inputStream) {
+        List<Book> dataList = new ArrayList<>();
 
         try (OPCPackage pkg = OPCPackage.open(inputStream);
              Workbook workbook = new SXSSFWorkbook(new XSSFWorkbook(pkg))) { // SXSSFWorkbook 사용
@@ -85,15 +96,11 @@ public class ExcelReaderService {
 
                 // 해당 행이 null이 아닌 경우만 처리
                 if (row != null) {
-                    List<String> rowData = new ArrayList<>();
+                    String title = getCellValue(row.getCell(0));
+                    int price = parsePrice(getCellValue(row.getCell(1)));
+                    String author = getCellValue(row.getCell(2));
 
-                    // 해당 행의 모든 셀을 처리
-                    for (int j = 0; j < row.getPhysicalNumberOfCells(); j++) {
-                        Cell cell = row.getCell(j);
-                        rowData.add(getCellValue(cell));
-                    }
-
-                    dataList.add(rowData);
+                    dataList.add(new Book(title, price, author));
                 }
             }
         } catch (Exception e) {

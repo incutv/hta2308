@@ -1,3 +1,4 @@
+INSERT INTO book (title, price, author) VALUES ('책 제목1', 10000, '저자1');
 
 INSERT INTO notice (title, content, who,views, createDate, updateDate)
 VALUES ('USA','content','incu',100,now(),now());
