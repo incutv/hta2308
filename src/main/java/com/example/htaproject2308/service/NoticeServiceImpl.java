@@ -26,9 +26,18 @@ public class NoticeServiceImpl implements NoticeService {
     }
 
     @Override
+    // 캐시의 이름 / 캐시적용 조건(빈문자열은 항상 캐시 사용)
+    @Cacheable(value = "NoticeMapper.getTop10Views")
     public List<Notice> getTop10Views() {
-        // 구현 해야함.. 내부 로직은 없음
-        return Collections.emptyList();
+        log.info("Fetching top 10 viewed notices from database");
+        List<Notice> notices = noticeReadMapper.findTop10Views();
+        // 정렬처리
+        notices.sort(Comparator.comparingInt(Notice::getViews)
+                .thenComparing(Notice::getCreateDate)
+                .reversed());
+        log.info("Notices fetched: {}", notices);
+        System.out.println("why");
+        return notices;
     }
 }
 
